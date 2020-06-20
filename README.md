@@ -15,3 +15,11 @@ Flutter 공식사이트 듀토리얼 참고
 
 개발하기 앞서서 개발할려는 배치도 아이디어를 생각하고 bottom-up으로 레이아웃을 설정하면서 개발한다.
 
+# 개념
+Widget - statelessWidget, statefulWidget
+layout - Column, Row
+container
+1. child - 한개의 위젯, Center, Container
+2. children - 여러개의 위젯, Row, Column, ListView, Stack
+
+
