@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-// class LoginPage extends StatefulWidget {
-//   @override
-//   _LoginPageState createState() => _LoginPageState();
-// }
+import 'package:study/mainPage.dart';
 
 class LoginPage extends StatelessWidget {
-  String id = '';
-  String password = '';
-
   Widget build(BuildContext context) {
+    String id = '';
+    String password = '';
+
     final idField = Padding(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -94,6 +90,10 @@ class LoginPage extends StatelessWidget {
           child: FlatButton(
             onPressed: () {
               print("$id  $password");
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainPage()),
+              );
             },
             child: Text(
               '로그인',
