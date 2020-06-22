@@ -1,5 +1,6 @@
+import 'package:Moim/FireBaseProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:Moim/MainPage.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -7,77 +8,58 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
-  InkWell _buildButtonColumn(
-      Color color, IconData icon, String label, BuildContext context) {
-    return InkWell(
-      onTap: () => {
-        if (label == 'BOARD')
-          {
-            print(label),
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => (MainPage())))
-          }
-        else if (label == 'CHAT')
-          {print(label)}
-        else if (label == 'PROFILE')
-          {
-            print(label),
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => (ProfilePage())))
-          }
-        else
-          print('error')
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(icon, color: color),
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color: color,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
+  FirebaseProvider fp;
   @override
   Widget build(BuildContext context) {
-    Color color = Colors.indigo[300];
-    return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          AppBar(
+    fp = Provider.of<FirebaseProvider>(context);
+
+    return ListView(
+      children: <Widget>[
+        Card(
+          child: ListTile(
             title: Text(
-              'Moim User Info',
-              style: TextStyle(color: Colors.white, fontFamily: 'BMHANNA'),
+              'CHANGE PROFILE',
+              style: TextStyle(
+                  fontFamily: 'BMHANNA', fontSize: 20, color: Colors.black),
             ),
-            backgroundColor: Colors.lime[500],
+            onTap: () => {},
           ),
-          Container(
-            color: Colors.lime[200],
-            width: MediaQuery.of(context).size.width,
-            height: 80,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                _buildButtonColumn(color, Icons.view_day, 'BOARD', context),
-                _buildButtonColumn(color, Icons.chat, 'CHAT', context),
-                _buildButtonColumn(
-                    color, Icons.account_circle, 'Profile', context),
-              ],
+        ),
+        Card(
+          child: ListTile(
+            title: Text(
+              'RESET PASSWORD',
+              style: TextStyle(
+                  fontFamily: 'BMHANNA',
+                  fontSize: 20,
+                  color: Colors.deepOrange[100]),
             ),
-          )
-        ],
-      ),
+            onTap: () => {fp.sendPasswordResetEmailByEnglish()},
+          ),
+        ),
+        Card(
+          child: ListTile(
+            title: Text(
+              'SIGN OUT',
+              style: TextStyle(
+                  fontFamily: 'BMHANNA',
+                  fontSize: 20,
+                  color: Colors.deepOrange[200]),
+            ),
+            onTap: () => {fp.signOut()},
+          ),
+        ),
+        Card(
+          child: ListTile(
+            title: Text(
+              'DELETE ACCOUNT',
+              style: TextStyle(
+                  fontFamily: 'BMHANNA', fontSize: 20, color: Colors.red),
+            ),
+            onTap: () => {fp.withdrawalAccount()},
+          ),
+        ),
+      ],
     );
   }
 }

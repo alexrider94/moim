@@ -15,7 +15,7 @@ class DashBoardState extends State<DashBoard> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white10,
-      height: MediaQuery.of(context).size.height - 160,
+      height: MediaQuery.of(context).size.height - 120,
       width: MediaQuery.of(context).size.width,
       child: GatheringLists(),
     );

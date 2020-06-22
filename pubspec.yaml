@@ -39,6 +39,7 @@ dev_dependencies:
     sdk: flutter
 
   flutter_launcher_icons: "^0.7.3"
+  flutter_native_splash: ^0.1.9
 
 flutter_icons:
   android: true
@@ -54,7 +55,7 @@ flutter:
   
   assets:
     - images/icons8-tree-64.png
-
+    - images/study.jpg
   fonts:
     - family: BMHANNA
       fonts:
@@ -62,4 +63,7 @@ flutter:
     - family: BlackHanSans
       fonts:
         - asset: fonts/BlackHanSans-Regular.ttf
-    
+
+flutter_native_splash:
+  image: icon/ic_launcher.png
+  color: "F3FBC5"

@@ -8,20 +8,8 @@ class ChatPage extends StatefulWidget {
 class ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: ListView(
-          children: <Widget>[
-            AppBar(
-              title: Text(
-                'Moim Chat',
-                style: TextStyle(color: Colors.white, fontFamily: 'BMHANNA'),
-              ),
-              backgroundColor: Colors.lime[500],
-            ),
-          ],
-        ),
-      ),
+    return ListView(
+      children: <Widget>[],
     );
   }
 }
