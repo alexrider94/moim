@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:Moim/loginPage.dart';
 import 'package:provider/provider.dart';
-import 'package:Moim/firebase_provider.dart';
+import 'package:Moim/FireBaseProvider.dart';
 
 void main() {
   runApp(MultiProvider(providers: [

@@ -15,11 +15,21 @@ Flutter 공식사이트 듀토리얼 참고
 
 개발하기 앞서서 개발할려는 배치도 아이디어를 생각하고 bottom-up으로 레이아웃을 설정하면서 개발한다.
 
+# 리팩토링
+- 한 화면에 여러 기능을 하는 위젯이 여러개 있을경우 한 위젯만으로 관리가 힘들어서 위젯의 영역을 분리한다.
+분리하는 방법에 있어서는 안티패턴을 조심!
+Stateless위젯은 인스턴스를 매번 만들게 되니 const Stateless를 잘 활용하고 메소드를 위젯을 분리하지 않도록 한다.  
+
+- Provider 패턴 : 관심사의 분리, 클래스가 하나의 역할만
+
+- Bloc 패턴 : UI와 데이터 처리 로직을 분리하는 방식
+
 # 개념
 Widget - statelessWidget, statefulWidget
 layout - Column, Row
 ItemBuilder - listView에 row가 추가될때 마다 호출되는 콜백
 ~/ - 나눗셈인데 ~추가로 정수형 반환
+
 
 # library
 - 설명

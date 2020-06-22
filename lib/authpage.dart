@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:Moim/firebase_provider.dart';
-import 'package:Moim/signin_page.dart';
+import 'package:Moim/FireBaseProvider.dart';
+import 'package:Moim/SignInPage.dart';
 import 'package:provider/provider.dart';
-import 'package:Moim/main_page.dart';
+import 'package:Moim/MainPage.dart';
 
 AuthPageState pageState;
 
