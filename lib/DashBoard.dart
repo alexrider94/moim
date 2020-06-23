@@ -16,16 +16,13 @@ class DashBoardState extends State<DashBoard> {
   Widget build(BuildContext context) {
     final String collectionName = 'Board';
     final String boardTitle = 'title';
-    final String boardContent = 'content';
     final String boardDateTime = 'dateTime';
 
     TextEditingController _newTitleCon = TextEditingController();
-    TextEditingController _newDescCon = TextEditingController();
 
-    void createDoc(String title, String description) {
+    void createDoc(String title) {
       Firestore.instance.collection(collectionName).add({
         boardTitle: title,
-        boardContent: description,
         boardDateTime: Timestamp.now(),
       });
     }
@@ -43,13 +40,13 @@ class DashBoardState extends State<DashBoard> {
                 children: <Widget>[
                   TextField(
                     autofocus: true,
-                    decoration: InputDecoration(labelText: "Title"),
+                    maxLength: 20,
+                    maxLengthEnforced: true,
+                    decoration: InputDecoration(
+                      labelText: "Title",
+                    ),
                     controller: _newTitleCon,
                   ),
-                  TextField(
-                    decoration: InputDecoration(labelText: "Description"),
-                    controller: _newDescCon,
-                  )
                 ],
               ),
             ),
@@ -58,19 +55,16 @@ class DashBoardState extends State<DashBoard> {
                 child: Text("Cancel"),
                 onPressed: () {
                   _newTitleCon.clear();
-                  _newDescCon.clear();
                   Navigator.pop(context);
                 },
               ),
               FlatButton(
                 child: Text("Create"),
                 onPressed: () {
-                  if (_newDescCon.text.isNotEmpty &&
-                      _newTitleCon.text.isNotEmpty) {
-                    createDoc(_newTitleCon.text, _newDescCon.text);
+                  if (_newTitleCon.text.isNotEmpty) {
+                    createDoc(_newTitleCon.text);
                   }
                   _newTitleCon.clear();
-                  _newDescCon.clear();
                   Navigator.pop(context);
                 },
               )

@@ -1,14 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:Moim/model/Board.dart';
-
-List<Board> boards = [
-  Board(
-      'Looking for StudyGroup',
-      'hyojin',
-      'im looking for study group for job interview and prefer software company',
-      'blahblah'),
-];
+import 'package:Moim/FireBaseProvider.dart';
+import 'package:provider/provider.dart';
 
 class GatheringLists extends StatefulWidget {
   @override
@@ -17,21 +10,48 @@ class GatheringLists extends StatefulWidget {
 
 class GatheringListsState extends State<GatheringLists> {
   final _biggerFont = const TextStyle(fontSize: 24.0);
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  static FirebaseProvider fp;
+  //final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   final String collectionName = 'Board';
   final String boardTitle = 'title';
-  final String boardContent = 'content';
   final String boardDateTime = 'dateTime';
   final String boardAuthorName = 'admin';
 
-  TextEditingController _undNameCon = TextEditingController();
-  TextEditingController _undDescCon = TextEditingController();
+  TextEditingController _undTitleCon = TextEditingController();
+
+  void showJoinDialog(DocumentSnapshot doc) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(doc['title']),
+            content: Container(
+              height: 50,
+              child: Column(
+                children: <Widget>[Text('Do you want to join group?')],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              FlatButton(
+                child: Text('No'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+  }
 
   void showUpdateOrDeleteDialog(DocumentSnapshot doc) {
-    _undNameCon.text = doc[boardTitle];
-    _undDescCon.text = doc[boardContent];
+    _undTitleCon.text = doc[boardTitle];
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -43,13 +63,11 @@ class GatheringListsState extends State<GatheringLists> {
             child: Column(
               children: <Widget>[
                 TextField(
+                  maxLength: 20,
+                  maxLengthEnforced: true,
                   decoration: InputDecoration(labelText: "Title"),
-                  controller: _undNameCon,
+                  controller: _undTitleCon,
                 ),
-                TextField(
-                  decoration: InputDecoration(labelText: "Description"),
-                  controller: _undDescCon,
-                )
               ],
             ),
           ),
@@ -57,17 +75,15 @@ class GatheringListsState extends State<GatheringLists> {
             FlatButton(
               child: Text("Cancel"),
               onPressed: () {
-                _undNameCon.clear();
-                _undDescCon.clear();
+                _undTitleCon.clear();
                 Navigator.pop(context);
               },
             ),
             FlatButton(
               child: Text("Update"),
               onPressed: () {
-                if (_undNameCon.text.isNotEmpty &&
-                    _undDescCon.text.isNotEmpty) {
-                  updateDoc(doc.documentID, _undNameCon.text, _undDescCon.text);
+                if (_undTitleCon.text.isNotEmpty) {
+                  updateDoc(doc.documentID, _undTitleCon.text);
                 }
                 Navigator.pop(context);
               },
@@ -86,11 +102,11 @@ class GatheringListsState extends State<GatheringLists> {
   }
 
   // 문서 갱신 (Update)
-  void updateDoc(String docID, String name, String description) {
-    Firestore.instance.collection(collectionName).document(docID).updateData({
-      boardTitle: name,
-      boardContent: description,
-    });
+  void updateDoc(String docID, String name) {
+    Firestore.instance
+        .collection(collectionName)
+        .document(docID)
+        .updateData({boardTitle: name});
   }
 
   // 문서 삭제 (Delete)
@@ -100,30 +116,32 @@ class GatheringListsState extends State<GatheringLists> {
 
   Widget _buildBoard() {
     return StreamBuilder<QuerySnapshot>(
-        stream: Firestore.instance
-            .collection(collectionName)
-            .orderBy(boardDateTime, descending: true)
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Text("Loading..");
-            default:
-              return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  padding: const EdgeInsets.all(8.0),
-                  itemCount: snapshot.data.documents.length,
-                  itemBuilder: (context, i) =>
-                      (buildCard(context, snapshot.data.documents[i])));
-          }
-        });
+      stream: Firestore.instance
+          .collection(collectionName)
+          .orderBy(boardDateTime, descending: true)
+          .snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Text("Loading..");
+          default:
+            return GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                padding: const EdgeInsets.all(8.0),
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (context, i) =>
+                    (buildCard(context, snapshot.data.documents[i])));
+        }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    fp = Provider.of<FirebaseProvider>(context);
     return _buildBoard();
   }
 
@@ -135,6 +153,9 @@ class GatheringListsState extends State<GatheringLists> {
       child: InkWell(
         onLongPress: () {
           showUpdateOrDeleteDialog(document);
+        },
+        onTap: () {
+          showJoinDialog(document);
         },
         child: Container(
           decoration: new BoxDecoration(

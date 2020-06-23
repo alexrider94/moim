@@ -40,6 +40,12 @@ ItemBuilder - listView에 row가 추가될때 마다 호출되는 콜백
     5. provider: 여러 페이지에서 인증 정보를 공유하기 위해 사용할 Provider 기능을 제공하는 플러그인
     6. shared_preferences: 사용자의 메일주소와 비밀번호를 저장하기 위해 사용할 플러그인
     7. logger: 로그을 출력하기 위한 플러그인(옵션)
+    8. firebase_storage: Firebase에 서버 저장소, 이미지 서로 왓다갓다 업로드,다운로드
+    9. fluttertoast - toast메세지 띄우기
+    10. shared_preferences - 로컬 캐시 데이터 저장
+    11. image_picker - 이미지 가져오거나 새로 이미지 찍는거
+    12. intl - 다국어
+
 # container
 1. child - 한개의 위젯, Center, Container
 2. children - 여러개의 위젯, Row, Column, ListView, Stack

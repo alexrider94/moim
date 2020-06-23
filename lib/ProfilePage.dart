@@ -1,6 +1,7 @@
 import 'package:Moim/FireBaseProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:Moim/ProfileSetting.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -22,7 +23,10 @@ class ProfilePageState extends State<ProfilePage> {
               style: TextStyle(
                   fontFamily: 'BMHANNA', fontSize: 20, color: Colors.black),
             ),
-            onTap: () => {},
+            onTap: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProfileSetting()))
+            },
           ),
         ),
         Card(
