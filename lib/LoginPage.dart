@@ -18,51 +18,49 @@ class LoginPage extends StatelessWidget {
           ),
           //3 text
           Container(
-            child: Expanded(
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(220, 160, 0, 0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          '모',
-                          style: TextStyle(
-                            fontFamily: 'BMHANNA',
-                            fontSize: 72,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w900,
-                          ),
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(220, 160, 0, 0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        '모',
+                        style: TextStyle(
+                          fontFamily: 'BMHANNA',
+                          fontSize: 72,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w900,
                         ),
-                        Text(
-                          '질게',
-                          style: TextStyle(
-                            fontSize: 24,
-                          ),
+                      ),
+                      Text(
+                        '질게',
+                        style: TextStyle(
+                          fontSize: 24,
                         ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          '임',
-                          style: TextStyle(
-                            fontFamily: 'BMHANNA',
-                            fontSize: 72,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w900,
-                          ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        '임',
+                        style: TextStyle(
+                          fontFamily: 'BMHANNA',
+                          fontSize: 72,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w900,
                         ),
-                        Text(
-                          '하자',
-                          style: TextStyle(
-                            fontSize: 24,
-                          ),
+                      ),
+                      Text(
+                        '하자',
+                        style: TextStyle(
+                          fontSize: 24,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

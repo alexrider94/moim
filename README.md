@@ -54,3 +54,9 @@ ItemBuilder - listView에 row가 추가될때 마다 호출되는 콜백
     4. Hosting
     5. Functions
     6. ML kit 
+
+
+# github 파일삭제후 폴더관리
+git rm --cached -r .
+git add.
+git commit -m 'commit message'

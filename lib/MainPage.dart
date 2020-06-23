@@ -22,15 +22,11 @@ class MainPageState extends State<MainPage> {
       child: Scaffold(
         //Top Bar
         // appBar: AppBar(
-        //   title: Text(
-        //     'Moim Board',
-        //     style: TextStyle(fontFamily: 'BMHANNA'),
-        //     textAlign: TextAlign.center,
-        //   ),
-        //   backgroundColor: Colors.lime[500],
+        //   backgroundColor: Colors.green[100],
         //   automaticallyImplyLeading: false,
         // ),
         body: Container(
+          color: Colors.green[100],
           child:
               //MAIN SECTOR
               _myPages.elementAt(_currentIndex),
@@ -42,7 +38,7 @@ class MainPageState extends State<MainPage> {
           onTap: onTabTapped,
           items: [
             BottomNavigationBarItem(
-                icon: new Icon(Icons.view_day), title: new Text('BOARD')),
+                icon: new Icon(Icons.dashboard), title: new Text('BOARD')),
             BottomNavigationBarItem(
                 icon: new Icon(Icons.chat), title: new Text('CHAT')),
             BottomNavigationBarItem(
