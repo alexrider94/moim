@@ -35,12 +35,12 @@ class GatheringListsState extends State<GatheringLists> {
 
   Widget _buildRow(Board board) {
     return Card(
-      semanticContainer: true,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.circular(30.0),
       ),
       child: Container(
         decoration: new BoxDecoration(
+          borderRadius: BorderRadius.circular(15.0),
           color: const Color(0xff7c94b6),
           image: new DecorationImage(
             fit: BoxFit.cover,

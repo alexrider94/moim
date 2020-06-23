@@ -21,22 +21,23 @@ class MainPageState extends State<MainPage> {
     return Material(
       child: Scaffold(
         //Top Bar
-        appBar: AppBar(
-          title: Text(
-            'Moim Board',
-            style: TextStyle(fontFamily: 'BMHANNA'),
-            textAlign: TextAlign.center,
-          ),
-          backgroundColor: Colors.lime[500],
-          automaticallyImplyLeading: false,
-        ),
+        // appBar: AppBar(
+        //   title: Text(
+        //     'Moim Board',
+        //     style: TextStyle(fontFamily: 'BMHANNA'),
+        //     textAlign: TextAlign.center,
+        //   ),
+        //   backgroundColor: Colors.lime[500],
+        //   automaticallyImplyLeading: false,
+        // ),
         body: Container(
           child:
               //MAIN SECTOR
               _myPages.elementAt(_currentIndex),
         ),
+
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.lightGreen[100],
+          backgroundColor: Colors.greenAccent[100],
           currentIndex: _currentIndex,
           onTap: onTabTapped,
           items: [
