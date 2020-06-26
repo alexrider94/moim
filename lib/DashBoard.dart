@@ -1,7 +1,9 @@
+import 'package:Moim/database.dart';
 import 'package:flutter/material.dart';
 import 'package:Moim/GatheringLists.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Moim/FireBaseProvider.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 DashBoardState pageState;
@@ -19,16 +21,22 @@ class DashBoardState extends State<DashBoard> {
     final String collectionName = 'Board';
     final String boardTitle = 'title';
     final String boardDateTime = 'dateTime';
+    final String boardAuthor = 'author';
     final String boardAuthorId = 'authorId';
     TextEditingController _newTitleCon = TextEditingController();
     FirebaseProvider fp = Provider.of<FirebaseProvider>(context);
 
     final String loggedUserId = fp.getUser().uid;
+    Future<dynamic> getUserNickname =
+        DatabaseService().getUserNickname(loggedUserId);
 
-    void createDoc(String title) {
+    void createDoc(String title) async {
+      String nickname;
+      await getUserNickname.then((value) => nickname = value);
       Firestore.instance.collection(collectionName).add({
         boardTitle: title,
         boardDateTime: Timestamp.now(),
+        boardAuthor: nickname,
         boardAuthorId: loggedUserId,
       });
     }
@@ -81,26 +89,68 @@ class DashBoardState extends State<DashBoard> {
     }
 
     return Scaffold(
-      appBar: new AppBar(
-        backgroundColor: Colors.green[100],
-        leading: IconButton(
-          icon: Icon(Icons.dehaze),
-          onPressed: () {},
-          iconSize: 32,
-        ),
-      ),
+      extendBodyBehindAppBar: true,
+      drawer: myDrawer(context),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.greenAccent[200],
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-          onPressed: showCreateDocDialog),
+        backgroundColor: Colors.greenAccent[200],
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        onPressed: showCreateDocDialog,
+      ),
+      appBar: myAppBar(), //myAppBar(),
       body: Container(
-        color: Colors.green[100],
+        color: Theme.of(context).accentColor,
         width: MediaQuery.of(context).size.width,
         child: GatheringLists(),
       ),
     );
   }
+}
+
+Widget myDrawer(BuildContext context) {
+  return Container(
+    width: 200,
+    child: Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Text('HEAD'),
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          ListTile(
+            title: Text('FRIEND'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: Text('EXIT'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget myAppBar() {
+  return AppBar(
+    backgroundColor: Colors.transparent,
+    bottomOpacity: 0.0,
+    elevation: 0.0,
+    title: Text("MOIM"),
+    actions: <Widget>[
+      new IconButton(
+        icon: new Icon(Icons.bookmark),
+        onPressed: null,
+      ),
+    ],
+  );
 }

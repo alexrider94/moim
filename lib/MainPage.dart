@@ -20,22 +20,18 @@ class MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-        //Top Bar
-        // appBar: AppBar(
-        //   backgroundColor: Colors.green[100],
-        //   automaticallyImplyLeading: false,
-        // ),
         body: Container(
-          color: Colors.green[100],
+          color: Theme.of(context).primaryColor,
           child:
               //MAIN SECTOR
               _myPages.elementAt(_currentIndex),
         ),
-
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.greenAccent[100],
+          backgroundColor: Theme.of(context).accentColor,
           currentIndex: _currentIndex,
           onTap: onTabTapped,
+          unselectedItemColor: Theme.of(context).primaryColor,
+          selectedItemColor: Colors.white,
           items: [
             BottomNavigationBarItem(
                 icon: new Icon(Icons.dashboard), title: new Text('BOARD')),

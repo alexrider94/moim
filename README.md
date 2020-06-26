@@ -30,6 +30,9 @@ layout - Column, Row
 ItemBuilder - listView에 row가 추가될때 마다 호출되는 콜백
 ~/ - 나눗셈인데 ~추가로 정수형 반환
 
+async / await -
+then -
+
 
 # library
 - 설명

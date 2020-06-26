@@ -19,8 +19,12 @@ class DatabaseService {
     });
   }
 
-  Future getUserData() async {
-    return userSettingCollection.document(uid).get();
+  getUserNickname(String getId) async {
+    String nick;
+    await userSettingCollection.document(getId).get().then((doc) {
+      nick = doc.data['nickname'];
+    });
+    return nick;
   }
 
   Future check() async {
