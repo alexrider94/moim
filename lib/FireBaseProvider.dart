@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
+import 'package:Moim/database.dart';
 
 Logger logger = Logger();
 
@@ -43,6 +45,7 @@ class FirebaseProvider with ChangeNotifier {
         // 인증 메일 발송
         result.user.sendEmailVerification();
         // 새로운 계정 생성이 성공하였으므로 기존 계정이 있을 경우 로그아웃 시킴
+        await DatabaseService(uid: result.user.uid).makeUserData("EmailUser");
         signOut();
         return true;
       } else {
@@ -89,9 +92,16 @@ class FirebaseProvider with ChangeNotifier {
       assert(user.displayName != null);
       assert(!user.isAnonymous);
       assert(await user.getIdToken() != null);
-
       final FirebaseUser currentUser = await fAuth.currentUser();
       assert(user.uid == currentUser.uid);
+
+      final snapShot = await Firestore.instance
+          .collection('userSetting')
+          .document(user.uid)
+          .get();
+      if (snapShot == null || !snapShot.exists) {
+        await DatabaseService(uid: user.uid).makeUserData('GoogleUser');
+      }
       setUser(user);
       return true;
     } on Exception catch (e) {

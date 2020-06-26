@@ -13,7 +13,6 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     fp = Provider.of<FirebaseProvider>(context);
-
     return ListView(
       children: <Widget>[
         Card(

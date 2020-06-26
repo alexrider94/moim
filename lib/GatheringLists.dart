@@ -152,7 +152,27 @@ class GatheringListsState extends State<GatheringLists> {
       ),
       child: InkWell(
         onLongPress: () {
-          showUpdateOrDeleteDialog(document);
+          if (document['authorId'] == fp.getUser().uid) {
+            showUpdateOrDeleteDialog(document);
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                // return object of type Dialog
+                return AlertDialog(
+                  content: new Text("No permission"),
+                  actions: <Widget>[
+                    new FlatButton(
+                      child: new Text("Close"),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          }
         },
         onTap: () {
           showJoinDialog(document);

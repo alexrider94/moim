@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:Moim/GatheringLists.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Moim/FireBaseProvider.dart';
+import 'package:provider/provider.dart';
 
 DashBoardState pageState;
 
@@ -17,13 +19,17 @@ class DashBoardState extends State<DashBoard> {
     final String collectionName = 'Board';
     final String boardTitle = 'title';
     final String boardDateTime = 'dateTime';
-
+    final String boardAuthorId = 'authorId';
     TextEditingController _newTitleCon = TextEditingController();
+    FirebaseProvider fp = Provider.of<FirebaseProvider>(context);
+
+    final String loggedUserId = fp.getUser().uid;
 
     void createDoc(String title) {
       Firestore.instance.collection(collectionName).add({
         boardTitle: title,
         boardDateTime: Timestamp.now(),
+        boardAuthorId: loggedUserId,
       });
     }
 

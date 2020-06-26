@@ -61,6 +61,12 @@ ItemBuilder - listView에 row가 추가될때 마다 호출되는 콜백
     5. Functions
     6. ML kit 
 
+# Widget
+
+1. MaterialApp / Material - Material design의 기본골격을 쉽게 추가할 수 있는 위젯 <-> CapertinoApp
+2. Scaffold - Material design 구조를 잡아주는 뼈대
+2. Container - 
+3. StatefulWidget - 위젯의 생명주기동안 값이 변할 수 있는 위젯, 반드시 State인스턴스를 생성하는 StatefulWidget클래스를 생성해야함.
 
 # github 파일삭제후 폴더관리
 git rm --cached -r .
