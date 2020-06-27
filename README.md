@@ -21,7 +21,7 @@ Flutter 공식사이트 듀토리얼 참고
 Stateless위젯은 인스턴스를 매번 만들게 되니 const Stateless를 잘 활용하고 메소드를 위젯을 분리하지 않도록 한다.  
 
 - Provider 패턴 : 관심사의 분리, 클래스가 하나의 역할만
-
+Provider함수는 이전 context에 있던 값을 부모에서 있는 값들을 가져올 수 있다.
 - Bloc 패턴 : UI와 데이터 처리 로직을 분리하는 방식
 
 # 개념
@@ -63,6 +63,10 @@ then -
     4. Hosting
     5. Functions
     6. ML kit 
+- documentId 가져오는 방법 - DocumentRefrence df = Firestore.instance.collection(col).add({datas});
+- 특정 document 하나 가져오는방법 - document(특정키값).get().then((doc){어떤저장변수값 = doc.data['필드이름']})으로 가져오고
+Future<dynamic>안에 저장되는데 이 값을 뽑아내기 위해서 asnyc함수와 await을 이용해서 그 저장된 변수값을 다시 then을 이용해 뽑아낸다.
+- 배열형태의 데이터를 추가할떄 배열형식으로 FieldValue.arrayUnion을 이용하여서 추가해줄 수 있음
 
 # Widget
 

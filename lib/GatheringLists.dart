@@ -1,3 +1,4 @@
+import 'package:Moim/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Moim/FireBaseProvider.dart';
@@ -33,7 +34,13 @@ class GatheringListsState extends State<GatheringLists> {
             actions: <Widget>[
               FlatButton(
                 child: Text('Yes'),
-                onPressed: () {
+                onPressed: () async {
+                  Future<dynamic> getUserNickname =
+                      DatabaseService().getUserNickname(fp.getUser().uid);
+                  String nickname;
+                  await getUserNickname.then((value) => nickname = value);
+                  DatabaseService().addUserInChatRoom(
+                      fp.getUser().uid, nickname, doc.documentID);
                   Navigator.pop(context);
                 },
               ),

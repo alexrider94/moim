@@ -21,7 +21,7 @@ class MainPageState extends State<MainPage> {
     return Material(
       child: Scaffold(
         body: Container(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).accentColor,
           child:
               //MAIN SECTOR
               _myPages.elementAt(_currentIndex),

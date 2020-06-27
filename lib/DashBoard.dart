@@ -33,12 +33,14 @@ class DashBoardState extends State<DashBoard> {
     void createDoc(String title) async {
       String nickname;
       await getUserNickname.then((value) => nickname = value);
-      Firestore.instance.collection(collectionName).add({
+      DocumentReference df;
+      df = await Firestore.instance.collection(collectionName).add({
         boardTitle: title,
         boardDateTime: Timestamp.now(),
         boardAuthor: nickname,
         boardAuthorId: loggedUserId,
       });
+      DatabaseService().makeChatRoom(title, df.documentID, boardAuthorId);
     }
 
     void showCreateDocDialog() {
