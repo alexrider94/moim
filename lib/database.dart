@@ -9,25 +9,18 @@ class DatabaseService {
       Firestore.instance.collection('userSetting');
   final CollectionReference chattingRoomCollection =
       Firestore.instance.collection('ChattingRoom');
-
+  final CollectionReference boardCollection =
+      Firestore.instance.collection('Board');
   Future makeChatRoom(
-      String title, String boardId, String nickname, String admin) async {
+      String title, String boardId, String nickname, String userId) async {
     return await chattingRoomCollection.document(boardId).setData({
       'title': title,
-      'users': [
-        {
-          'nickname': nickname,
-          'userId': admin,
-        }
-      ],
-      'admin': admin
+      'admin': userId,
+      'users': FieldValue.arrayUnion([userId])
     });
   }
 
   Future deleteChatRoom(String boardId, String userId) async {
-    await userSettingCollection
-        .document(userId)
-        .updateData({'chatroom': FieldValue.delete()});
     return await chattingRoomCollection.document(boardId).delete();
   }
 
@@ -40,18 +33,7 @@ class DatabaseService {
   Future addUserInChatRoom(
       String getUserId, String nickname, String getChatId) async {
     return await chattingRoomCollection.document(getChatId).updateData({
-      'users': FieldValue.arrayUnion([
-        {'nickname': nickname, 'userId': getUserId}
-      ])
-    });
-  }
-
-  Future addChatRoomInUserSetting(
-      String getUserId, String getChatId, String title) async {
-    return await userSettingCollection.document(getUserId).updateData({
-      'chatroom': FieldValue.arrayUnion([
-        {'chatroomId': getChatId, 'title': title}
-      ])
+      'users': FieldValue.arrayUnion([getUserId])
     });
   }
 
@@ -64,7 +46,12 @@ class DatabaseService {
   Future updateUserData(String getId, String nickname) async {
     return await userSettingCollection.document(getId).updateData({
       'nickname': nickname,
-      'chatroom': FieldValue.arrayUnion([]),
+    });
+  }
+
+  Future changeNickname(String getBoardId, String nickname) async {
+    return await boardCollection.document(getBoardId).updateData({
+      'author': nickname,
     });
   }
 

@@ -19,6 +19,14 @@ class GatheringListsState extends State<GatheringLists> {
 
   TextEditingController _undTitleCon = TextEditingController();
 
+  void getNickname(BuildContext context, DocumentSnapshot document) async {
+    String nickname;
+    Future<dynamic> getUserNickname =
+        DatabaseService().getUserNickname(fp.getUser().uid);
+    await getUserNickname.then((value) => nickname = value);
+    DatabaseService().changeNickname(document.documentID, nickname);
+  }
+
   void showJoinDialog(DocumentSnapshot doc) {
     showDialog(
         context: context,
@@ -35,14 +43,12 @@ class GatheringListsState extends State<GatheringLists> {
               FlatButton(
                 child: Text('Yes'),
                 onPressed: () async {
+                  String nickname;
                   Future<dynamic> getUserNickname =
                       DatabaseService().getUserNickname(fp.getUser().uid);
-                  String nickname;
                   await getUserNickname.then((value) => nickname = value);
                   DatabaseService().addUserInChatRoom(
                       fp.getUser().uid, nickname, doc.documentID);
-                  DatabaseService().addChatRoomInUserSetting(
-                      fp.getUser().uid, doc.documentID, doc['title']);
                   Navigator.pop(context);
                 },
               ),
@@ -133,7 +139,7 @@ class GatheringListsState extends State<GatheringLists> {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return Text("Loading..");
+            return Center(child: Text("Loading"));
           default:
             return GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -155,6 +161,8 @@ class GatheringListsState extends State<GatheringLists> {
   }
 
   Widget buildCard(BuildContext context, DocumentSnapshot document) {
+    getNickname(context, document);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 50),
       child: Card(

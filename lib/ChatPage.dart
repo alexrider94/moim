@@ -16,42 +16,41 @@ class ChatPageState extends State<ChatPage> {
   }
 
   Widget buildChatRoomList(FirebaseProvider fp) {
-    return StreamBuilder<DocumentSnapshot>(
+    return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance
-          .collection('userSetting')
-          .document(fp.getUser().uid)
+          .collection('ChattingRoom')
+          .where('users', arrayContains: fp.getUser().uid)
           .snapshots(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) return Text('Error ${snapshot.error}');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return Text("Loading..");
+            return Center(child: Text("Loading"));
           case ConnectionState.none:
-            return Text("NO CHAT");
+            return Center(child: Text("NO CHAT"));
           default:
-            if (snapshot.data['chatroom'] != null) {
+            if (snapshot.data.documents.length != null) {
               return ListView.builder(
                   padding: const EdgeInsets.fromLTRB(45, 100, 45, 50),
-                  itemCount: snapshot.data['chatroom'].length == null
+                  itemCount: snapshot.data.documents.length == null
                       ? 0
-                      : snapshot.data['chatroom'].length,
+                      : snapshot.data.documents.length,
                   itemBuilder: (context, i) =>
-                      buildChatRoom(context, i, snapshot.data['chatroom']));
+                      buildChatRoom(context, i, snapshot.data.documents[i]));
             } else {
-              return Expanded(child: Center(child: Text("NO CHAT")));
+              return Center(child: Text("NO CHAT"));
             }
         }
       },
     );
   }
 
-  Widget buildChatRoom(BuildContext context, int index, List<dynamic> doc) {
+  Widget buildChatRoom(BuildContext context, int index, DocumentSnapshot doc) {
     return InkWell(
         onTap: () {},
         child: Container(
           child: ListTile(
-            title: Text(doc[index]['title'].toString()),
+            title: Text(doc['title'].toString()),
           ),
           decoration: new BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),

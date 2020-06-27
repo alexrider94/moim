@@ -41,9 +41,7 @@ class DashBoardState extends State<DashBoard> {
         boardAuthorId: loggedUserId,
       });
       DatabaseService()
-          .addChatRoomInUserSetting(loggedUserId, df.documentID, title);
-      DatabaseService()
-          .makeChatRoom(title, df.documentID, nickname, boardAuthorId);
+          .makeChatRoom(title, df.documentID, nickname, fp.getUser().uid);
     }
 
     void showCreateDocDialog() {

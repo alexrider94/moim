@@ -67,6 +67,8 @@ then -
 - 특정 document 하나 가져오는방법 - document(특정키값).get().then((doc){어떤저장변수값 = doc.data['필드이름']})으로 가져오고
 Future<dynamic>안에 저장되는데 이 값을 뽑아내기 위해서 asnyc함수와 await을 이용해서 그 저장된 변수값을 다시 then을 이용해 뽑아낸다.
 - 배열형태의 데이터를 추가할떄 배열형식으로 FieldValue.arrayUnion을 이용하여서 추가해줄 수 있음
+- 배열내부안에 딕셔너리형태로 where문을 이용해서 값을 가져올려고했는데 최근에는 arrayContains가 인덱스의 값만 가져와서 내부 키값을 가져올수
+없는것이라고한다. 그래서 그냥 배열내의 배열이 아닌 배열로만 users로 처리하였다.
 
 # Widget
 
