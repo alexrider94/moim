@@ -41,6 +41,8 @@ class GatheringListsState extends State<GatheringLists> {
                   await getUserNickname.then((value) => nickname = value);
                   DatabaseService().addUserInChatRoom(
                       fp.getUser().uid, nickname, doc.documentID);
+                  DatabaseService().addChatRoomInUserSetting(
+                      fp.getUser().uid, doc.documentID, doc['title']);
                   Navigator.pop(context);
                 },
               ),
@@ -107,15 +109,17 @@ class GatheringListsState extends State<GatheringLists> {
   }
 
   // 문서 갱신 (Update)
-  void updateDoc(String docID, String name) {
+  void updateDoc(String docID, String title) {
     Firestore.instance
         .collection(collectionName)
         .document(docID)
-        .updateData({boardTitle: name});
+        .updateData({boardTitle: title});
+    DatabaseService().updateChatRoom(docID, title);
   }
 
   // 문서 삭제 (Delete)
   void deleteDoc(String docID) {
+    DatabaseService().deleteChatRoom(docID, fp.getUser().uid);
     Firestore.instance.collection(collectionName).document(docID).delete();
   }
 

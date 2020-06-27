@@ -10,10 +10,31 @@ class DatabaseService {
   final CollectionReference chattingRoomCollection =
       Firestore.instance.collection('ChattingRoom');
 
-  Future makeChatRoom(String title, String boardId, String admin) async {
+  Future makeChatRoom(
+      String title, String boardId, String nickname, String admin) async {
+    return await chattingRoomCollection.document(boardId).setData({
+      'title': title,
+      'users': [
+        {
+          'nickname': nickname,
+          'userId': admin,
+        }
+      ],
+      'admin': admin
+    });
+  }
+
+  Future deleteChatRoom(String boardId, String userId) async {
+    await userSettingCollection
+        .document(userId)
+        .updateData({'chatroom': FieldValue.delete()});
+    return await chattingRoomCollection.document(boardId).delete();
+  }
+
+  Future updateChatRoom(String boardId, String title) async {
     return await chattingRoomCollection
         .document(boardId)
-        .setData({'title': title, 'users': [], 'admin': admin});
+        .updateData({'title': title});
   }
 
   Future addUserInChatRoom(
@@ -21,6 +42,15 @@ class DatabaseService {
     return await chattingRoomCollection.document(getChatId).updateData({
       'users': FieldValue.arrayUnion([
         {'nickname': nickname, 'userId': getUserId}
+      ])
+    });
+  }
+
+  Future addChatRoomInUserSetting(
+      String getUserId, String getChatId, String title) async {
+    return await userSettingCollection.document(getUserId).updateData({
+      'chatroom': FieldValue.arrayUnion([
+        {'chatroomId': getChatId, 'title': title}
       ])
     });
   }
@@ -34,6 +64,7 @@ class DatabaseService {
   Future updateUserData(String getId, String nickname) async {
     return await userSettingCollection.document(getId).updateData({
       'nickname': nickname,
+      'chatroom': FieldValue.arrayUnion([]),
     });
   }
 
