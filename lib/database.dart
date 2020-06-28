@@ -11,6 +11,25 @@ class DatabaseService {
       Firestore.instance.collection('ChattingRoom');
   final CollectionReference boardCollection =
       Firestore.instance.collection('Board');
+
+  addConversationMessages(String boardId, messageMap) {
+    chattingRoomCollection
+        .document(boardId)
+        .collection('chats')
+        .add(messageMap)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
+
+  getConversationMessages(String boardId) async {
+    return chattingRoomCollection
+        .document(boardId)
+        .collection('chats')
+        .orderBy("time", descending: false)
+        .snapshots();
+  }
+
   Future makeChatRoom(
       String title, String boardId, String nickname, String userId) async {
     return await chattingRoomCollection.document(boardId).setData({
@@ -21,6 +40,15 @@ class DatabaseService {
   }
 
   Future deleteChatRoom(String boardId, String userId) async {
+    await chattingRoomCollection
+        .document(boardId)
+        .collection('chats')
+        .getDocuments()
+        .then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.documents) {
+        ds.reference.delete();
+      }
+    });
     return await chattingRoomCollection.document(boardId).delete();
   }
 
@@ -34,6 +62,12 @@ class DatabaseService {
       String getUserId, String nickname, String getChatId) async {
     return await chattingRoomCollection.document(getChatId).updateData({
       'users': FieldValue.arrayUnion([getUserId])
+    });
+  }
+
+  Future deleteUserFromChatRoom(String getUserId, String getChatId) async {
+    return await chattingRoomCollection.document(getChatId).updateData({
+      'users': FieldValue.arrayRemove([getUserId])
     });
   }
 

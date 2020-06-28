@@ -24,7 +24,9 @@ class GatheringListsState extends State<GatheringLists> {
     Future<dynamic> getUserNickname =
         DatabaseService().getUserNickname(fp.getUser().uid);
     await getUserNickname.then((value) => nickname = value);
-    DatabaseService().changeNickname(document.documentID, nickname);
+    if (fp.getUser().uid == document['authorId']) {
+      DatabaseService().changeNickname(document.documentID, nickname);
+    }
   }
 
   void showJoinDialog(DocumentSnapshot doc) {

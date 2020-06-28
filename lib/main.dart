@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Color(0xFF68a682),
-        accentColor: Color(0xFF2b3634),
-      ),
+          primaryColor: Color(0xFF68a682),
+          accentColor: Color(0xFF2b3634),
+          visualDensity: VisualDensity.adaptivePlatformDensity),
       title: "Moim",
       home: LoginPage(),
     );
