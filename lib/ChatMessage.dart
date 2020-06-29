@@ -27,7 +27,10 @@ class ChatMessage extends StatelessWidget {
           ),
           //message
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            margin: isSendByMe
+                ? EdgeInsets.only(left: 30)
+                : EdgeInsets.only(right: 30),
+            padding: EdgeInsets.only(top: 17, bottom: 17, left: 20, right: 20),
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: isSendByMe
