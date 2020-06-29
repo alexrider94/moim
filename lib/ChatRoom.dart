@@ -83,12 +83,10 @@ class ChatRoomState extends State<ChatRoom> {
         body: Column(
           children: <Widget>[
             Container(
-                height: MediaQuery.of(context).size.height * 0.8,
+                height: MediaQuery.of(context).size.height - 140,
                 child: chatMessageList()),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.119,
+            Expanded(
               child:
-                  //Message ui
                   //Message sending ui
                   Container(
                 alignment: Alignment.bottomCenter,
