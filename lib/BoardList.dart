@@ -1,16 +1,16 @@
-import 'package:Moim/database.dart';
+import 'package:Moim/Database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Moim/FireBaseProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-class GatheringLists extends StatefulWidget {
+class BoardList extends StatefulWidget {
   @override
-  GatheringListsState createState() => GatheringListsState();
+  BoardListState createState() => BoardListState();
 }
 
-class GatheringListsState extends State<GatheringLists> {
+class BoardListState extends State<BoardList> {
   static FirebaseProvider fp;
   final String collectionName = 'Board';
   final String boardTitle = 'title';

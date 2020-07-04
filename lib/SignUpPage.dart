@@ -35,79 +35,81 @@ class SignUpPageState extends State<SignUpPage> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(title: Text("Sign-Up Page")),
-        body: ListView(
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
-              child: Column(
-                children: <Widget>[
-                  //Header
-                  Container(
-                    height: 50,
-                    decoration: BoxDecoration(color: Colors.amber),
-                    child: Center(
-                      child: Text(
-                        "Create Account",
-                        style: TextStyle(
-                            color: Colors.blueGrey,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+        body: Container(
+          color: Theme.of(context).accentColor,
+          child: ListView(
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                child: Column(
+                  children: <Widget>[
+                    //Header
+                    Container(
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          "Create Account",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
-                  ),
 
-                  // Input Area
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.amber, width: 1),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        TextField(
-                          controller: _mailCon,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.mail),
-                            hintText: "Email",
+                    // Input Area
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          TextField(
+                            controller: _mailCon,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.mail),
+                              hintText: "Email",
+                              hintStyle: TextStyle(color: Colors.white),
+                            ),
                           ),
-                        ),
-                        TextField(
-                          controller: _pwCon,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.lock),
-                            hintText: "Password",
+                          TextField(
+                            controller: _pwCon,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.lock),
+                              hintText: "Password",
+                              hintStyle: TextStyle(color: Colors.white),
+                            ),
+                            obscureText: true,
                           ),
-                          obscureText: true,
-                        ),
-                      ].map((c) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 10),
-                          child: c,
-                        );
-                      }).toList(),
-                    ),
-                  )
-                ],
-              ),
-            ),
-
-            // Sign Up Button
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: RaisedButton(
-                color: Colors.indigo[300],
-                child: Text(
-                  "SIGN UP",
-                  style: TextStyle(color: Colors.white),
+                        ].map((c) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 10),
+                            child: c,
+                          );
+                        }).toList(),
+                      ),
+                    )
+                  ],
                 ),
-                onPressed: () {
-                  FocusScope.of(context)
-                      .requestFocus(new FocusNode()); // 키보드 감춤
-                  _signUp();
-                },
               ),
-            ),
-          ],
+
+              // Sign Up Button
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: RaisedButton(
+                  color: Theme.of(context).primaryColor,
+                  child: Text(
+                    "SIGN UP",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () {
+                    FocusScope.of(context)
+                        .requestFocus(new FocusNode()); // 키보드 감춤
+                    _signUp();
+                  },
+                ),
+              ),
+            ],
+          ),
         ));
   }
 
